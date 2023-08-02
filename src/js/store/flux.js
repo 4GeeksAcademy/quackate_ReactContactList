@@ -1,42 +1,69 @@
+import { Modal } from "../component/modal";
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			contacts: []
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
+
+			getInitialContacts: () => {
 				//get the store
 				const store = getStore();
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
+				fetch('https://jsonplaceholder.typicode.com/users')
+				.then(function(response) {
+					if (response.ok) {
+						return response.json();
+					}
+					else {
+						throw Error('Could not access the data requested');
+					}
+				})
+				.then(data => {
+					setStore({contacts: data});
+				})
+				.catch(error => {
+					console.log(error);
 				});
+			},
+			addContact: (contact) => {
+				//get the store
+				const store = getStore();
+
+				const newContact = store.contacts.concat(contact)
 
 				//reset the global store
-				setStore({ demo: demo });
+				setStore({ contacts: newContact });
+				console.log(store.contacts)
+			},
+			deleteContact: (index) => {
+				//get the store
+				const store = getStore();
+
+				const newContact = store.contacts.filter((contact, i) => {
+					//if (<Modal className="yes"/>) {
+						return index !== i
+					//}
+				})
+
+				//reset the global store
+				setStore({ contacts: newContact });
+			},
+			editContact: (index, newName, newEmail, newPhone, newStreet, newSuite, newCity, newZipcode) => {
+				//get the store
+				const store = getStore();
+
+				const newContact = store.contacts.map((contact, i) => {
+					if (index == i) {
+						contact.name = newName, contact.email = newEmail, contact.phone = newPhone, contact.address.street = newStreet, contact.address.suite = newSuite, contact.address.city = newCity, contact.address.zipcode = newZipcode;
+					}
+
+					return contact;
+				})
+
+				//reset the global store
+				setStore({ contacts: newContact });
 			}
 		}
 	};
