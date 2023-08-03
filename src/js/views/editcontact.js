@@ -23,7 +23,7 @@ export const EditContact = () => {
 
     return (
         <div className="form-contact m-5">
-            <h1 className="text-center">Add a new contact!</h1>
+            <h1 className="text-center">Edit this contact</h1>
             <div>
                 <div className="mb-3">
                     <label for="fullname" className="form-label">Full Name</label>
@@ -56,7 +56,7 @@ export const EditContact = () => {
                     </div>
                 </div>
                 
-                <button type="button" onClick={() => {actions.editContact(params.index, newName, newEmail, newPhone, newStreet, newSuite, newCity, newZipcode)}} className="mb-2 save-button btn btn-primary">Modify Contact</button>
+                <button type="button" onClick={() => {actions.editContact(params.index, newName, newEmail, newPhone, newStreet, newSuite, newCity, newZipcode)}} className="mb-2 save-button btn btn-primary">Save Changes</button>
             </div>
             <Link to="/">
                 <p>go back to contacts</p>
