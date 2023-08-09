@@ -1,4 +1,3 @@
-import { Modal } from "../component/modal";
 
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -42,9 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 
 				const newContact = store.contacts.filter((contact, i) => {
-					//if (<Modal className="yes"/>) {
 						return index !== i
-					//}
 				})
 
 				//reset the global store
